@@ -3,27 +3,25 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import { createStore } from 'redux';
+import { combineReducers, createStore } from 'redux';
 
-function reducer(state, action){
-    if (action.type === 'changeState'){
-        return action.payload.newState;
-    }
-    return 'State';
+function productsReducer(state = [], action){
+    return state;
 }
 
-const store = createStore(reducer);
+function userReducer(state='', action){
+    return state
+}
 
-console.log(store.getState());
+const allReducers = combineReducers({
+    products: productsReducer,
+    users: userReducer
+});
 
-const action = {
-    type: 'changeState',
-    payload: {
-        newState: 'New state'
-    }
-};
-
-store.dispatch(action);
+const store = createStore(allReducers, {
+    products: [{name: 'iPhone'}],
+    users: 'Michael'
+});
 
 console.log(store.getState())
 
